@@ -5,11 +5,14 @@ from googleapiclient.discovery import build, build as build_docs_api
 from googleapiclient.discovery import build as build_sheets_api
 import json
 from flask import jsonify
+import os
 
 app = Flask(__name__)
 
 #Google API setup
-SERVICE_ACCOUNT_FILE = "service-account.json"
+#SERVICE_ACCOUNT_FILE = "service-account.json"
+SERVICE_ACCOUNT_FILE = os.path.join(os.getcwd(), 'client_secret.json')
+
 SCOPES = ["https://www.googleapis.com/auth/drive", "https://www.googleapis.com/auth/documents"]
 
 creds = service_account.Credentials.from_service_account_file(
