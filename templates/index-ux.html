@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My Tech SEO Assistant</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    @font-face {
+      font-family: 'CircularXX';
+      src: url('https://images.simplycodes.com/fonts/simply-circular/CircularXXWeb-Regular.woff2') format('woff2');
+      font-weight: normal;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    body {
+      font-family: 'CircularXX', sans-serif;
+      margin: 0;
+      background-color: #f8f7f4;
+      color: #002e2c;
+    }
+
+    header {
+      background-color: #002e2c;
+      padding: 20px 40px;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header h1 {
+      margin: 0;
+      letter-spacing: -0.4pt;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin-left: 20px;
+      text-transform: uppercase;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    form.search-form {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 40px;
+    }
+
+    input[type="text"] {
+      flex: 1;
+      padding: 12px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    button {
+      padding: 12px 20px;
+      background-color: #ecf879;
+      color: #002e2c;
+      font-weight: bold;
+      text-transform: uppercase;
+      font-size: 14px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #e0eb6d;
+    }
+
+    .results h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+    }
+
+    .result-item {
+      background-color: #ffffff;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .result-item p {
+      margin: 5px 0;
+      font-size: 14px;
+      color: #555;
+    }
+
+    footer {
+      background-color: #def299;
+      color: black;
+      text-align: center;
+      padding: 5px 20px;
+      margin-top: 60px;
+    }
+
+    /* Modal */
+    #copyModal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 9999;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #copyModal .modal-content {
+      background: white;
+      padding: 30px;
+      border-radius: 8px;
+      width: 90%;
+      max-width: 500px;
+      position: relative;
+    }
+
+    #copyModal h2 {
+      margin-top: 0;
+      font-family: 'Playfair Display', serif;
+    }
+
+    #copyModal form {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    #copyModal label {
+      font-weight: 600;
+      font-size: 15px;
+    }
+
+    #copyModal input, #copyModal select {
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+
+    .hero {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  background-image: url('https://www.bringdigital.co.uk/wp-content/uploads/2024/06/pexels-life-of-pix-8892-1920x1080.jpg');
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-overlay {
+  text-align: center;
+  color: white;
+}
+
+.hero h1 {
+  font-size: 66px;
+  font-weight: 100;
+  margin: 0;
+  letter-spacing: -1.8pt;
+  word-spacing: -2pt;
+}
+
+.hero h1 em {
+  font-style: italic;
+  font-weight: 400;
+}
+
+i, em {
+    font-family: "instrument-serif", serif;
+    font-weight:lighter;
+}
+  </style>
+
+<style>
+  body {
+    font-family: 'Circular', sans-serif;
+    background-color: #F9F9ED;
+    margin: 0;
+    padding: 0;
+  }
+
+  .container {
+    display: flex;
+    flex-direction: row;
+    min-height: 100vh;
+  }
+
+  .search-panel {
+    background-color: #0D2D27;
+    color: white;
+    padding: 40px;
+    width: 40%;
+    box-sizing: border-box;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+  }
+
+  .results-panel {
+    background-color: #1F4D44;
+    color: white;
+    padding: 40px;
+    width: 60%;
+    box-sizing: border-box;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    overflow-y: auto;
+  }
+
+  .search-form input[type="text"],
+  .search-form select {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+
+  .search-form button {
+    padding: 12px 20px;
+    background-color: #D9F24B;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-right: 10px;
+  }
+
+  .results h2 {
+    color: #D9F24B;
+    margin-top: 0;
+  }
+
+  .result-item {
+    background-color: #204E3B;
+    padding: 20px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+  }
+
+  .result-item p {
+    margin: 5px 0;
+  }
+
+  .result-item button {
+    background-color: #D9F24B;
+    color: black;
+    border: none;
+    padding: 10px;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  #successMessage {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #D9F24B;
+  }
+
+</style>
+
+</head>
+<body>
+<div class="container">
+  <div class="search-panel">
+    <header>
+    <img src="https://www.bringdigital.co.uk/wp-content/uploads/2024/04/logo-bring-digital.svg" class="h-100" alt="Bring Digital">
+    <nav>
+      <a href="https://docs.google.com/spreadsheets/d/19ykdZU6LG3NfttY3TANqkTMoh0Bi_b22QHIlqhznbto/edit?gid=0#gid=0" target="_blank">SEO Dept. Dashboard</a>
+    </nav>
+  </header>
+  <section class="hero">
+  <div class="hero-overlay">
+    <h1>Technical <em>SEO Assistant</em></h1>
+  </div>
+</section>
+</div>
+
+<div class="results-panel">
+  {% if results is not none %}
+    <div class="results">
+      <h2>
+        {% if keyword %}
+          Results for: "{{ keyword }}"
+        {% else %}
+          Total Developer Briefs: {{ results|length }}
+        {% endif %}
+      </h2>
+      {% if results %}
+        {% for doc in results %}
+          <div class="result-item">
+            <p><a href="{{ doc.webViewLink }}" target="_blank">{{ doc.name }}</a></p>
+            <p>📅 {{ doc.modifiedTime }}</p>
+            <p>📁 Folder: {{ doc.folderName }}</p>
+            <br>
+            <button type="button" onclick="openModal('{{ doc.id }}')">Copy</button>
+          </div>
+        {% endfor %}
+      {% else %}
+        <p>No matching documents found.</p>
+      {% endif %}
+    </div>
+  {% endif %}
+</div>
+
+
+  <!-- Modal -->
+  <div id="copyModal">
+    <div class="modal-content">
+      <h2 id="modalGreeting">Welcome 👋</h2>
+      <form id="briefForm" method="POST" action="/create-brief">
+
+        <input type="hidden" name="file_id" id="modal_file_id">
+
+        <label>Client Name:</label>
+          <select name="client_name" id="clientSelect" required onchange="updateClientInfo()">
+            <option value="">-- Select Client --</option>
+            {% for name in clients %}
+              <option value="{{ name }}">{{ name }}</option>
+            {% endfor %}
+          </select>
+
+          <div id="clientInfo" style="margin-top: 10px; font-size: 14px; color: #444;">
+            <p><strong># Tickets:</strong> <span id="tickets">–</span></p>
+            <p><strong>Tickets Completed:</strong> <span id="completed">–</span></p>
+            <p><strong>% Completed:</strong> <span id="percent">–</span></p>
+          </div>
+
+        <label>Ref No:</label>
+        <input type="text" name="ref_no" required>
+
+        <label>Issue Category:</label>
+        <input type="text" name="issue_category" required>
+
+        <label>Issue Name:</label>
+        <input type="text" name="issue_name" required>
+
+        <label>Priority:</label>
+        <select name="priority" required>
+          <option value="">-- Select Priority --</option>
+          <option value="High">High</option>
+          <option value="Medium">Medium</option>
+          <option value="Low">Low</option>
+        </select>
+        <!-- ADD BELOW PRIORITY DROPDOWN -->
+        <label>Save to Folder:</label>
+        <select name="folder_id" required>
+          {% for folder in folders %}
+            <option value="{{ folder.id }}">{{ folder.name }}</option>
+          {% endfor %}
+        </select>
+        <button type="submit">Create Brief</button>
+        <button type="button" onclick="closeModal()" style="background-color: #ddd; color: #000;">Cancel</button>
+        <div id="successMessage" style="margin-top: 20px; display: none; color: green;"></div>
+      </form>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2025 Bring Digital. All Rights Reserved. | Technical SEO Assistant</p>
+  </footer>
+
+  
+
+
+</div>
+</body>
+</html>
+
+
+<script>
+  window.onload = function () {
+    const clientMeta = {{ client_data|safe }};
+
+    function updateClientInfo() {
+      const client = document.getElementById("clientSelect").value;
+      const data = clientMeta[client];
+
+      document.getElementById("tickets").innerText = data ? data.tickets : "–";
+      document.getElementById("completed").innerText = data ? data.completed : "–";
+      document.getElementById("percent").innerText = data ? data.percent : "–";
+
+      if (data && data.lead) {
+        const hour = new Date().getHours();
+        let timeOfDay = "Hello";
+
+        if (hour >= 5 && hour < 12) timeOfDay = "Good morning";
+        else if (hour >= 12 && hour < 17) timeOfDay = "Good afternoon";
+        else timeOfDay = "Good evening";
+
+        document.getElementById("modalGreeting").innerText = `${timeOfDay}, ${data.lead} 👋`;
+      } else {
+        document.getElementById("modalGreeting").innerText = `Welcome 👋`;
+      }
+    }
+
+    const form = document.getElementById("briefForm");
+    if (form) {
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const formData = new FormData(form);
+
+        fetch(form.action, {
+          method: "POST",
+          body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+          const successDiv = document.getElementById("successMessage");
+          successDiv.style.display = "block";
+          successDiv.innerHTML = `
+            ✅ Brief created successfully!<br>
+            <a href="${data.doc_link}" target="_blank">Open Document</a>
+          `;
+        })
+        .catch(error => {
+          alert("Something went wrong. Please try again.");
+          console.error(error);
+        });
+    });
+  }
+};
+</script>
